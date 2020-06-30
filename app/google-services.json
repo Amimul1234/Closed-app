@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1052144712883",
+    "firebase_url": "https://aula-18.firebaseio.com",
+    "project_id": "aula-18",
+    "storage_bucket": "aula-18.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1052144712883:android:a697b4106943d1b74884c6",
+        "android_client_info": {
+          "package_name": "com.rahi.e_commerceapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1052144712883-ie89q68gpbfqauaiopkqkfoh7clc7263.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAW2jOAk6HBnHYgLjGGOjsQMZ_apH_ZNBo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1052144712883-ie89q68gpbfqauaiopkqkfoh7clc7263.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
