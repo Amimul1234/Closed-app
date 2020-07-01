@@ -1,6 +1,7 @@
 package com.rahi.e_commerceapp.ViewHolder;
 
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -10,8 +11,11 @@ import com.rahi.e_commerceapp.Interface.ItemClickListener;
 import com.rahi.e_commerceapp.R;
 
 public class CartViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+
     public TextView txtProductName, txtProductPrice, txtProductQuantity;
+    public ImageView cart_image;
     private ItemClickListener itemClickListener;
+
 
     public CartViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -19,6 +23,7 @@ public class CartViewHolder extends RecyclerView.ViewHolder implements View.OnCl
         txtProductName = itemView.findViewById(R.id.cart_product_name);
         txtProductPrice = itemView.findViewById(R.id.cart_product_price);
         txtProductQuantity = itemView.findViewById(R.id.cart_product_quantity);
+        cart_image = itemView.findViewById(R.id.cart_product_image);
     }
 
     @Override

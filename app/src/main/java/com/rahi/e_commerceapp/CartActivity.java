@@ -25,6 +25,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.rahi.e_commerceapp.Model.Cart;
 import com.rahi.e_commerceapp.Prevalent.Prevalent;
 import com.rahi.e_commerceapp.ViewHolder.CartViewHolder;
+import com.squareup.picasso.Picasso;
 
 public class CartActivity extends AppCompatActivity {
 
@@ -84,6 +85,7 @@ public class CartActivity extends AppCompatActivity {
                 holder.txtProductQuantity.setText("Quantity = "+model.getQuantity());
                 holder.txtProductPrice.setText("Price = "+model.getPrice()+" per piece");
                 holder.txtProductName.setText("Product name = "+model.getPname());
+                Picasso.get().load(model.getImage()).into(holder.cart_image);
 
                 int oneProductTotalPrice = Integer.valueOf(model.getPrice()) * Integer.valueOf(model.getQuantity());//For getting the per item total price
                 totalPrice += oneProductTotalPrice;

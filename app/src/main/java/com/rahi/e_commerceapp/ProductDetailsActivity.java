@@ -37,6 +37,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
     private ElegantNumberButton numberButton;
     private TextView productPrice, productDescription, productNames;
     private String productID = "";
+    private String imageUrl = "";
 
 
     @Override
@@ -80,9 +81,11 @@ public class ProductDetailsActivity extends AppCompatActivity {
         final DatabaseReference cartList = FirebaseDatabase.getInstance().getReference().child("Cart List");
 
         final HashMap<String, Object> cartMap = new HashMap<>();
+
         cartMap.put("pid", productID);
         cartMap.put("pname", productNames.getText().toString());
         cartMap.put("price", productPrice.getText().toString());
+        cartMap.put("image", imageUrl);
         cartMap.put("date", saveCurrentDate);
         cartMap.put("time", saveCurrentTime);
         cartMap.put("quantity", numberButton.getNumber());
@@ -113,6 +116,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
     }
 
     private void getProductDetails(String productID) {
+
         DatabaseReference productRef = FirebaseDatabase.getInstance().getReference().child("Products");
         productRef.child(productID).addValueEventListener(new ValueEventListener() {
             @Override
@@ -124,7 +128,9 @@ public class ProductDetailsActivity extends AppCompatActivity {
                     productNames.setText(products.getPname());
                     productPrice.setText(products.getPrice());
                     productDescription.setText(products.getDescription());
+                    imageUrl = products.getImage();
                     Picasso.get().load(products.getImage()).into(productImage);
+
                 }
             }
 
