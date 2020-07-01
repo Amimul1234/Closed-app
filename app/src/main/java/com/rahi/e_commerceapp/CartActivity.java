@@ -33,6 +33,8 @@ public class CartActivity extends AppCompatActivity {
     private Button NextProcessBtn;
     private TextView txtTotalAmount;
 
+    private int totalPrice;
+
     //This is for navigating to cart menu......
 
     @Override
@@ -47,6 +49,19 @@ public class CartActivity extends AppCompatActivity {
 
         NextProcessBtn = findViewById(R.id.next_button);
         txtTotalAmount = findViewById(R.id.total_price);
+
+        NextProcessBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                txtTotalAmount.setText("Total price = "+String.valueOf(totalPrice));
+
+                Intent intent = new Intent(getApplicationContext(), ConfirmFinalOrder.class);
+                intent.putExtra("Total Price", String.valueOf(totalPrice));
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 
     @Override
@@ -69,6 +84,9 @@ public class CartActivity extends AppCompatActivity {
                 holder.txtProductQuantity.setText("Quantity = "+model.getQuantity());
                 holder.txtProductPrice.setText("Price = "+model.getPrice()+" per piece");
                 holder.txtProductName.setText("Product name = "+model.getPname());
+
+                int oneProductTotalPrice = Integer.valueOf(model.getPrice()) * Integer.valueOf(model.getQuantity());//For getting the per item total price
+                totalPrice += oneProductTotalPrice;
 
                 //If the user want to change the added items of the cart
 
