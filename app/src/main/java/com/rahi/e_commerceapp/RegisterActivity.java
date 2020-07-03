@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -49,6 +50,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void CreateAccount()
     {
+
         String name = InputName.getText().toString();
         String phone = InputPhoneNumber.getText().toString();
         String password = InputPassword.getText().toString();
@@ -102,9 +104,9 @@ public class RegisterActivity extends AppCompatActivity {
 
                             if(task.isSuccessful())
                             {
-                                Toast.makeText(getApplicationContext(), "Congratulations ! Your account created sucessfully", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), "Congratulations ! Your account created successfully", Toast.LENGTH_SHORT).show();
                                 loadingbar.dismiss();
-
+                                FirebaseAuth.getInstance().signOut();
                                 Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
                                 startActivity(intent);
                             }
