@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FF0065"
-    tools:context=".MainActivity">
+    tools:context=".SplashScreen">
 
     <pl.droidsonroids.gif.GifImageView
         android:layout_width="match_parent"
@@ -19,7 +19,7 @@
         />
 
     <TextView
-        android:id="@+id/company_name"
+        android:id="@+id/company_name1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@+id/gif1"
@@ -34,11 +34,11 @@
         />
 
     <TextView
-        android:id="@+id/slogan"
+        android:id="@+id/slogan1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="ALWAYS AT\n                              YOUR SERVICE"
-        app:layout_constraintTop_toBottomOf="@+id/company_name"
+        app:layout_constraintTop_toBottomOf="@+id/company_name1"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         android:textStyle="bold|italic"
