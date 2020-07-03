@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
         joinNowButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent1 = new Intent(MainActivity.this, RegisterActivity.class);
+                Intent intent1 = new Intent(MainActivity.this, RegisterWithOtp.class);
                 startActivity(intent1);
             }
         });
