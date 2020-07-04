@@ -130,6 +130,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                         return holder;
                     }
                 };
+
         recyclerView.setAdapter(adapter);
         adapter.startListening();
     }
