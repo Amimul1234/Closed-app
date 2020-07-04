@@ -112,7 +112,7 @@ public class CartActivity extends AppCompatActivity {
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(CartActivity.this, ProductDetailsActivity.class);
+                        Intent intent = new Intent(CartActivity.this, ProductDetailsActivity.class);//For giving product description to the user when clicks on a cart item
                         intent.putExtra("pid", model.getPid());
                         startActivity(intent);
                     }
