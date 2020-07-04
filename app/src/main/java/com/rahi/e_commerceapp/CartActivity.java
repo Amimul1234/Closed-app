@@ -62,6 +62,7 @@ public class CartActivity extends AppCompatActivity {
                 intent.putExtra("Total Price", String.valueOf(totalPrice));
                 startActivity(intent);
                 finish();
+
             }
         });
     }
