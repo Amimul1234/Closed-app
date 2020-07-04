@@ -31,13 +31,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/rll"
-        android:layout_above="@+id/next_button"
-        >
-
-
-
-
-    </androidx.recyclerview.widget.RecyclerView>
+        android:layout_above="@+id/next_button"/>
 
     <Button
         android:id="@+id/next_button"

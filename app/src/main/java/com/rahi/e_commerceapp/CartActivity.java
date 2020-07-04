@@ -82,13 +82,15 @@ public class CartActivity extends AppCompatActivity {
             @Override
             protected void onBindViewHolder(@NonNull CartViewHolder holder, int position, @NonNull final Cart model) {
 
-                holder.txtProductQuantity.setText("Quantity = "+model.getQuantity());
-                holder.txtProductPrice.setText("Price = "+model.getPrice()+" per piece");
-                holder.txtProductName.setText("Product name = "+model.getPname());
-                Picasso.get().load(model.getImage()).into(holder.cart_image);
+                //Updating the cart items
 
-                int oneProductTotalPrice = Integer.valueOf(model.getPrice()) * Integer.valueOf(model.getQuantity());//For getting the per item total price
-                totalPrice += oneProductTotalPrice;
+                Picasso.get().load(model.getImage()).into(holder.cart_image);
+                holder.txtProductName.setText(model.getPname());
+                holder.txtProductQuantity.setText("৳ "+model.getPrice()+" X "+model.getQuantity());
+                int one_product_total_price = Integer.parseInt(model.getPrice()) * Integer.parseInt(model.getQuantity());
+                holder.txtProductPrice.setText("৳ "+String.valueOf(one_product_total_price));
+
+                totalPrice += one_product_total_price;
 
                 //If the user want to change the added items of the cart
 
