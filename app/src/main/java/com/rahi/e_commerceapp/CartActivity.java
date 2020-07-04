@@ -85,7 +85,9 @@ public class CartActivity extends AppCompatActivity {
 
                 //Updating the cart items single card view
 
-                Picasso.get().load(model.getImage()).into(holder.cart_image);
+                String cart_product_image = model.getImage();
+                cart_product_image = cart_product_image.replace(".jpg", "_200x200.jpg");
+                Picasso.get().load(cart_product_image).into(holder.cart_image);
                 holder.txtProductName.setText(model.getPname());
                 holder.txtProductQuantity.setText("৳ "+model.getPrice()+" X "+model.getQuantity());
                 int one_product_total_price = Integer.parseInt(model.getPrice()) * Integer.parseInt(model.getQuantity());
@@ -107,60 +109,15 @@ public class CartActivity extends AppCompatActivity {
                 });
 
 
-                /*
-
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
-                        CharSequence options[] = new CharSequence[]
-                                {
-                                        "Edit",
-                                        "Delete"
-                                };
-
-                        AlertDialog.Builder builder = new AlertDialog.Builder(CartActivity.this);
-                        builder.setTitle("Cart Options");
-
-                        builder.setItems(options, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                                if(which == 0)
-                                {
-                                    Intent intent = new Intent(CartActivity.this, ProductDetailsActivity.class);
-                                    intent.putExtra("pid", model.getPid());
-                                    startActivity(intent);
-                                }
-
-                                if(which == 1)//For removing the item from the cart of the user
-                                {
-                                    cartListRef.child("User View")
-                                            .child(Prevalent.currentOnlineUser.getPhone())
-                                            .child("Products")
-                                            .child(model.getPid())
-                                            .removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                @Override
-                                                public void onComplete(@NonNull Task<Void> task) {
-
-                                                    if(task.isSuccessful())
-                                                    {
-                                                        Toast.makeText(getApplicationContext(), "Item is removed successfully", Toast.LENGTH_SHORT).show();
-
-                                                        Intent intent = new Intent(CartActivity.this, HomeActivity.class);
-                                                        startActivity(intent);
-                                                    }
-
-                                                }
-                                            });
-                                }
-                            }
-                        });
-                    builder.show();
+                        Intent intent = new Intent(CartActivity.this, ProductDetailsActivity.class);
+                        intent.putExtra("pid", model.getPid());
+                        startActivity(intent);
                     }
                 });
 
-                 */
             }
 
             @NonNull
