@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -80,7 +81,7 @@ public class CartActivity extends AppCompatActivity {
         FirebaseRecyclerAdapter<Cart, CartViewHolder> adapter
                 = new FirebaseRecyclerAdapter<Cart, CartViewHolder>(options) {
             @Override
-            protected void onBindViewHolder(@NonNull CartViewHolder holder, int position, @NonNull final Cart model) {
+            protected void onBindViewHolder(@NonNull final CartViewHolder holder, int position, @NonNull final Cart model) {
 
                 //Updating the cart items single card view
 
@@ -92,7 +93,21 @@ public class CartActivity extends AppCompatActivity {
                 holder.numberButton.setNumber(model.getQuantity());
                 totalPrice += one_product_total_price;
 
-                //If the user want to change the added items of the cart
+                //If the user want to change the added items of the cart using elegant button
+
+                holder.numberButton.setOnValueChangeListener(new ElegantNumberButton.OnValueChangeListener() {
+                    @Override
+                    public void onValueChange(ElegantNumberButton view, int oldValue, int newValue) {
+                        int quantity = Integer.parseInt(holder.numberButton.getNumber());
+                        model.setQuantity(String.valueOf(quantity));
+                        holder.txtProductQuantity.setText("৳ "+model.getPrice()+" X "+model.getQuantity());
+                        int one_product_total_price = Integer.parseInt(model.getPrice()) * Integer.parseInt(model.getQuantity());
+                        holder.txtProductPrice.setText("৳ "+String.valueOf(one_product_total_price));
+                    }
+                });
+
+
+                /*
 
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -144,6 +159,8 @@ public class CartActivity extends AppCompatActivity {
                     builder.show();
                     }
                 });
+
+                 */
             }
 
             @NonNull
