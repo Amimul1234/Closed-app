@@ -17,6 +17,7 @@
         <activity android:name=".VerifyPhoneActivity"
             android:screenOrientation="portrait"/>
 
+
         <activity android:name=".RegisterWithOtp"
             android:screenOrientation="portrait"/>
 
