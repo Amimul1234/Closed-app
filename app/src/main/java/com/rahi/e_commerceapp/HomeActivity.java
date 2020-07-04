@@ -60,6 +60,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         setSupportActionBar(toolbar);
 
         FloatingActionButton fab = findViewById(R.id.fab);
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -105,10 +106,11 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                     @Override
                     protected void onBindViewHolder(@NonNull ProductViewHolder holder, int position, @NonNull final Products model) {
 
+                        String thumbnail = model.getImage();//Generating thumbnail images
+                        thumbnail = thumbnail.replace(".jpg", "_200x200.jpg");
+                        Picasso.get().load(thumbnail).into(holder.imageView);
                         holder.textProductName.setText(model.getPname());
-                        holder.textProductDescription.setText(model.getDescription());
-                        holder.textProductPrice.setText("Price = "+model.getPrice());
-                        Picasso.get().load(model.getImage()).into(holder.imageView);
+                        holder.textProductPrice.setText("৳ "+model.getPrice());
 
                         holder.itemView.setOnClickListener(new View.OnClickListener() {   //Adding click listener to products
                             @Override

@@ -12,7 +12,7 @@ import com.rahi.e_commerceapp.R;
 
 public class ProductViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-    public TextView textProductName, textProductDescription, textProductPrice;
+    public TextView textProductName, textProductPrice;
     public ImageView imageView;
     public ItemClickListener listener;
 
@@ -21,7 +21,6 @@ public class ProductViewHolder extends RecyclerView.ViewHolder implements View.O
 
         imageView = itemView.findViewById(R.id.product_image);
         textProductName = itemView.findViewById(R.id.product_name);
-        textProductDescription = itemView.findViewById(R.id.product_description);
         textProductPrice = itemView.findViewById(R.id.product_price);
     }
 
