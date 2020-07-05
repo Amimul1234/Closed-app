@@ -148,9 +148,19 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.home, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
-        int id = item.getItemId();
+        if(item.getItemId() == R.id.search_product)
+        {
+            Intent intent = new Intent(HomeActivity.this, SearchProducts.class);
+            startActivity(intent);
+        }
 
         return super.onOptionsItemSelected(item);
     }
