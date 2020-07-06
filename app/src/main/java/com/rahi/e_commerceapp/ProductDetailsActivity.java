@@ -34,10 +34,9 @@ import java.util.HashMap;
 public class ProductDetailsActivity extends AppCompatActivity {
 
     private FloatingActionButton addToCart, back_button;
-    //private ImageView productImage;
     private ZoomInImageView productImage;
     private ElegantNumberButton numberButton;
-    private TextView productPrice, productDescription, productNames;
+    private TextView productPrice, productDescription, productNames, productCategory;
     private String productID = "";
     private String imageUrl = "";
     private String dummyPrice = "";
@@ -57,6 +56,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
         productPrice = findViewById(R.id.product_price);
         productNames = findViewById(R.id.product_name);
         back_button = findViewById(R.id.back_from_product_details);
+        productCategory = findViewById(R.id.product_category);
 
         getProductDetails(productID);
 
@@ -141,6 +141,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
                     dummyPrice = products.getPrice();
                     productDescription.setText(products.getDescription());
                     imageUrl = products.getImage();
+                    productCategory.setText("Category: "+products.getCategory());
                     Picasso.get().load(products.getImage()).into(productImage);
 
                 }
