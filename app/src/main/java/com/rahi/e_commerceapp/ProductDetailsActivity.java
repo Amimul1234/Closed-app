@@ -23,6 +23,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.rahi.e_commerceapp.Model.Products;
 import com.rahi.e_commerceapp.Prevalent.Prevalent;
 import com.squareup.picasso.Picasso;
+import com.zolad.zoominimageview.ZoomInImageView;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -33,7 +34,8 @@ import java.util.HashMap;
 public class ProductDetailsActivity extends AppCompatActivity {
 
     private FloatingActionButton addToCart, back_button;
-    private ImageView productImage;
+    //private ImageView productImage;
+    private ZoomInImageView productImage;
     private ElegantNumberButton numberButton;
     private TextView productPrice, productDescription, productNames;
     private String productID = "";
