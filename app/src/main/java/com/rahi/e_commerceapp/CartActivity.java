@@ -50,7 +50,6 @@ public class CartActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
 
         NextProcessBtn = findViewById(R.id.next_button);
-        txtTotalAmount = findViewById(R.id.total_price);
 
         NextProcessBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,8 +86,9 @@ public class CartActivity extends AppCompatActivity {
                 //Updating the cart items single card view
 
                 String cart_product_image = model.getImage();
-                cart_product_image = cart_product_image.replace(".jpg", "_200x200.jpg");
+                cart_product_image = cart_product_image.replace(".jpg", "_200x200.jpg");//Getting 200*200 Images
                 Picasso.get().load(cart_product_image).into(holder.cart_image);
+
                 holder.txtProductName.setText(model.getPname());
                 holder.txtProductQuantity.setText("৳ "+model.getPrice()+" X "+model.getQuantity());
                 int one_product_total_price = Integer.parseInt(model.getPrice()) * Integer.parseInt(model.getQuantity());

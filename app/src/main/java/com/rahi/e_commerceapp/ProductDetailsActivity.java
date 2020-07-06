@@ -32,12 +32,13 @@ import java.util.HashMap;
 
 public class ProductDetailsActivity extends AppCompatActivity {
 
-    private FloatingActionButton addToCart;
+    private FloatingActionButton addToCart, back_button;
     private ImageView productImage;
     private ElegantNumberButton numberButton;
     private TextView productPrice, productDescription, productNames;
     private String productID = "";
     private String imageUrl = "";
+    private String dummyPrice = "";
 
 
     @Override
@@ -53,6 +54,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
         productDescription = findViewById(R.id.product_details);
         productPrice = findViewById(R.id.product_price);
         productNames = findViewById(R.id.product_name);
+        back_button = findViewById(R.id.back_from_product_details);
 
         getProductDetails(productID);
 
@@ -63,6 +65,12 @@ public class ProductDetailsActivity extends AppCompatActivity {
             }
         });
 
+        back_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
     }
 
     private void addingToCartList() {
@@ -84,7 +92,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
         cartMap.put("pid", productID);
         cartMap.put("pname", productNames.getText().toString());
-        cartMap.put("price", productPrice.getText().toString());
+        cartMap.put("price", dummyPrice);
         cartMap.put("image", imageUrl);
         cartMap.put("date", saveCurrentDate);
         cartMap.put("time", saveCurrentTime);
@@ -127,7 +135,8 @@ public class ProductDetailsActivity extends AppCompatActivity {
                     Products products = snapshot.getValue(Products.class);
 
                     productNames.setText(products.getPname());
-                    productPrice.setText(products.getPrice());
+                    productPrice.setText("৳ "+products.getPrice());
+                    dummyPrice = products.getPrice();
                     productDescription.setText(products.getDescription());
                     imageUrl = products.getImage();
                     Picasso.get().load(products.getImage()).into(productImage);
