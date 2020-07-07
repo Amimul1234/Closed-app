@@ -2,12 +2,14 @@ package com.rahi.e_commerceapp;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Intent;
 import android.media.Image;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,10 +35,12 @@ import java.util.HashMap;
 
 public class ProductDetailsActivity extends AppCompatActivity {
 
-    private FloatingActionButton addToCart, back_button;
+    private LinearLayout addToCart;
     private ZoomInImageView productImage;
     private ElegantNumberButton numberButton;
+    private ImageView back_button;
     private TextView productPrice, productDescription, productNames, productCategory;
+    private TextView title;
     private String productID = "";
     private String imageUrl = "";
     private String dummyPrice = "";
@@ -57,6 +61,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
         productNames = findViewById(R.id.product_name);
         back_button = findViewById(R.id.back_from_product_details);
         productCategory = findViewById(R.id.product_category);
+        title = findViewById(R.id.book_title);
 
         getProductDetails(productID);
 
@@ -136,12 +141,13 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
                     Products products = snapshot.getValue(Products.class);
                     productNames.setText(products.getPname());
-                    productPrice.setText("৳ "+products.getPrice());
+                    productPrice.setText("Price: "+"৳ "+products.getPrice());
                     dummyPrice = products.getPrice();
                     productDescription.setText(products.getDescription());
                     imageUrl = products.getImage();
                     productCategory.setText("Category: "+products.getCategory());
                     Picasso.get().load(products.getImage()).into(productImage);
+                    title.setText(products.getPname());
 
                 }
             }
