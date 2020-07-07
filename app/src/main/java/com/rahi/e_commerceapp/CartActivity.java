@@ -37,6 +37,7 @@ public class CartActivity extends AppCompatActivity {
     private TextView txtTotalAmount;
     private int totalPrice=0;
     private TextView total_price;
+    private ImageView back_from_cart;
 
     //This is for navigating to cart menu......
 
@@ -52,6 +53,16 @@ public class CartActivity extends AppCompatActivity {
 
         checkout_button = findViewById(R.id.next_button);
         total_price = findViewById(R.id.total_amount);
+        back_from_cart = findViewById(R.id.back_arrow_from_cart);
+
+
+        back_from_cart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
 
         checkout_button.setOnClickListener(new View.OnClickListener() {
             @Override
