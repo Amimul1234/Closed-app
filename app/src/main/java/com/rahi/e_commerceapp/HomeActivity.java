@@ -157,7 +157,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                         @Override
                         public void onClick(DialogInterface arg0, int arg1) {
                             Intent intent = new Intent(HomeActivity.this, ExitActivity.class);
-
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            startActivity(intent);
                         }
                     });
 
