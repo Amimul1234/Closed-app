@@ -33,9 +33,10 @@ public class CartActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
-    private Button NextProcessBtn;
+    private Button checkout_button;
     private TextView txtTotalAmount;
-    private int totalPrice;
+    private int totalPrice=0;
+    private TextView total_price;
 
     //This is for navigating to cart menu......
 
@@ -49,14 +50,12 @@ public class CartActivity extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-        NextProcessBtn = findViewById(R.id.next_button);
+        checkout_button = findViewById(R.id.next_button);
+        total_price = findViewById(R.id.total_amount);
 
-        NextProcessBtn.setOnClickListener(new View.OnClickListener() {
+        checkout_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                txtTotalAmount.setText("Total price = "+String.valueOf(totalPrice));
-
                 Intent intent = new Intent(getApplicationContext(), ConfirmFinalOrder.class);
                 intent.putExtra("Total Price", String.valueOf(totalPrice));
                 startActivity(intent);
@@ -96,6 +95,8 @@ public class CartActivity extends AppCompatActivity {
                 holder.txtProductPrice.setText("৳ "+String.valueOf(one_product_total_price));
                 holder.numberButton.setNumber(model.getQuantity());
                 totalPrice += one_product_total_price;
+                total_price.setText(String.valueOf(totalPrice));
+
 
                 //For deleting the cart item
                 holder.delete.setOnClickListener(new View.OnClickListener() {
@@ -116,9 +117,10 @@ public class CartActivity extends AppCompatActivity {
                                                         .removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
                                                     @Override
                                                     public void onComplete(@NonNull Task<Void> task) {
-
                                                         if(task.isSuccessful())
                                                         {
+                                                            totalPrice = totalPrice-(Integer.parseInt(model.getPrice()) * Integer.parseInt(model.getQuantity()));
+                                                            total_price.setText(String.valueOf(totalPrice));
                                                             Toast.makeText(getApplicationContext(), "Item removed from cart", Toast.LENGTH_SHORT).show();
                                                         }
                                                     }
@@ -129,7 +131,7 @@ public class CartActivity extends AppCompatActivity {
                         alertDialogBuilder.setNegativeButton("No",new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                finish();
+
                             }
                         });
 
@@ -144,22 +146,26 @@ public class CartActivity extends AppCompatActivity {
                 holder.numberButton.setOnValueChangeListener(new ElegantNumberButton.OnValueChangeListener() {
                     @Override
                     public void onValueChange(ElegantNumberButton view, int oldValue, int newValue) {
+
                         int quantity = Integer.parseInt(holder.numberButton.getNumber());
                         model.setQuantity(String.valueOf(quantity));
-                        holder.txtProductQuantity.setText("৳ "+model.getPrice()+" X "+model.getQuantity());
-                        int one_product_total_price = Integer.parseInt(model.getPrice()) * Integer.parseInt(model.getQuantity());
-                        holder.txtProductPrice.setText("৳ "+String.valueOf(one_product_total_price));
+
+                        //Updating data in the database
 
                         cartListRef.child("User View").child(Prevalent.currentOnlineUser.getPhone()).child("Products").child(model.getPid()).child("quantity")
                                 .setValue(model.getQuantity()).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
-                               if(!task.isSuccessful())
-                               {
-                                   Toast.makeText(CartActivity.this, "Please check your internet connection", Toast.LENGTH_SHORT).show();
-                               }
+                                if(!task.isSuccessful())
+                                {
+                                    Toast.makeText(CartActivity.this, "Please check your internet connection", Toast.LENGTH_SHORT).show();
+                                }
                             }
                         });
+
+                        holder.txtProductQuantity.setText("৳ "+model.getPrice()+" X "+model.getQuantity());
+                        int one_product_price = Integer.parseInt(model.getPrice()) * Integer.parseInt(model.getQuantity());
+                        holder.txtProductPrice.setText("৳ "+String.valueOf(one_product_price));
 
                     }
                 });
@@ -168,6 +174,7 @@ public class CartActivity extends AppCompatActivity {
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        totalPrice = 0;
                         Intent intent = new Intent(CartActivity.this, ProductDetailsActivity.class);//For giving product description to the user when clicks on a cart item
                         intent.putExtra("pid", model.getPid());
                         startActivity(intent);

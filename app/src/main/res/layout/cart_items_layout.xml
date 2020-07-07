@@ -82,6 +82,7 @@
                     android:layout_alignParentBottom="true"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentEnd="true"
+                    app:initialNumber="1"
                     app:backgroundDrawable="@drawable/input_design"/>
 
             </RelativeLayout>
