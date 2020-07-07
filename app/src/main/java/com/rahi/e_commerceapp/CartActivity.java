@@ -101,7 +101,9 @@ public class CartActivity extends AppCompatActivity {
                 holder.delete.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+
                         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(CartActivity.this);
+
                         alertDialogBuilder.setMessage("Are you sure you want to remove this item from cart ?");
                                 alertDialogBuilder.setPositiveButton("yes",
                                         new DialogInterface.OnClickListener() {
@@ -147,6 +149,18 @@ public class CartActivity extends AppCompatActivity {
                         holder.txtProductQuantity.setText("৳ "+model.getPrice()+" X "+model.getQuantity());
                         int one_product_total_price = Integer.parseInt(model.getPrice()) * Integer.parseInt(model.getQuantity());
                         holder.txtProductPrice.setText("৳ "+String.valueOf(one_product_total_price));
+
+                        cartListRef.child("User View").child(Prevalent.currentOnlineUser.getPhone()).child("Products").child(model.getPid()).child("quantity")
+                                .setValue(model.getQuantity()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                               if(!task.isSuccessful())
+                               {
+                                   Toast.makeText(CartActivity.this, "Please check your internet connection", Toast.LENGTH_SHORT).show();
+                               }
+                            }
+                        });
+
                     }
                 });
 

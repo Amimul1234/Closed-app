@@ -106,20 +106,19 @@ public class ProductDetailsActivity extends AppCompatActivity {
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
+
                         if(task.isSuccessful())
                         {
-                            cartList.child("Admin View").child(Prevalent.currentOnlineUser.getPhone()).child("Products").child(productID)
-                                    .updateChildren(cartMap)
-                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
-                                            Toast.makeText(getApplicationContext(), "Added to cart", Toast.LENGTH_SHORT).show();
-
-                                            Intent intent = new Intent(ProductDetailsActivity.this, HomeActivity.class);
-                                            startActivity(intent);
-                                        }
-                                    });
+                            Toast.makeText(getApplicationContext(), "Added to cart", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(ProductDetailsActivity.this, HomeActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(intent);
                         }
+                        else
+                        {
+                            Toast.makeText(ProductDetailsActivity.this, "Plaease check your network connection", Toast.LENGTH_SHORT).show();
+                        }
+
                     }
                 });
 
