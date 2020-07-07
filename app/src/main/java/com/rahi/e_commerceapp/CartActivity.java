@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,7 +35,6 @@ public class CartActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager layoutManager;
     private Button NextProcessBtn;
     private TextView txtTotalAmount;
-
     private int totalPrice;
 
     //This is for navigating to cart menu......
@@ -80,6 +80,7 @@ public class CartActivity extends AppCompatActivity {
 
         FirebaseRecyclerAdapter<Cart, CartViewHolder> adapter
                 = new FirebaseRecyclerAdapter<Cart, CartViewHolder>(options) {
+
             @Override
             protected void onBindViewHolder(@NonNull final CartViewHolder holder, int position, @NonNull final Cart model) {
 
@@ -95,6 +96,46 @@ public class CartActivity extends AppCompatActivity {
                 holder.txtProductPrice.setText("৳ "+String.valueOf(one_product_total_price));
                 holder.numberButton.setNumber(model.getQuantity());
                 totalPrice += one_product_total_price;
+
+                //For deleting the cart item
+                holder.delete.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(CartActivity.this);
+                        alertDialogBuilder.setMessage("Are you sure you want to remove this item from cart ?");
+                                alertDialogBuilder.setPositiveButton("yes",
+                                        new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface arg0, int arg1) {
+                                                cartListRef.child("User View")
+                                                        .child(Prevalent.currentOnlineUser.getPhone())
+                                                        .child("Products")
+                                                        .child(model.getPid())
+                                                        .removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<Void> task) {
+
+                                                        if(task.isSuccessful())
+                                                        {
+                                                            Toast.makeText(getApplicationContext(), "Item removed from cart", Toast.LENGTH_SHORT).show();
+                                                        }
+                                                    }
+                                                });
+                                            }
+                                        });
+
+                        alertDialogBuilder.setNegativeButton("No",new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                finish();
+                            }
+                        });
+
+                        AlertDialog alertDialog = alertDialogBuilder.create();
+                        alertDialog.show();
+                    }
+                });
+
 
                 //If the user want to change the added items of the cart using elegant button
 
@@ -132,6 +173,6 @@ public class CartActivity extends AppCompatActivity {
 
         recyclerView.setAdapter(adapter);
         adapter.startListening();
-
     }
+
 }

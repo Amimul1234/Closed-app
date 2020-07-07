@@ -134,8 +134,8 @@ public class ProductDetailsActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.exists())
                 {
-                    Products products = snapshot.getValue(Products.class);
 
+                    Products products = snapshot.getValue(Products.class);
                     productNames.setText(products.getPname());
                     productPrice.setText("৳ "+products.getPrice());
                     dummyPrice = products.getPrice();

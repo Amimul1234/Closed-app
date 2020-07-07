@@ -15,13 +15,12 @@
         android:padding="10dp"
         >
 
-        <CheckBox
-            android:id="@+id/cart_item_delete_checkbox"
+        <ImageView
+            android:id="@+id/cart_item_delete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:buttonTint="@color/colorPrimaryDark"
-            />
+            android:src="@drawable/ic_baseline_delete_24"
+            android:layout_gravity="center"/>
 
         <ImageView
             android:id="@+id/cart_product_image"
@@ -83,8 +82,7 @@
                     android:layout_alignParentBottom="true"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentEnd="true"
-                    app:backgroundDrawable="@drawable/input_design"
-                    app:textSize="10sp"/>
+                    app:backgroundDrawable="@drawable/input_design"/>
 
             </RelativeLayout>
 

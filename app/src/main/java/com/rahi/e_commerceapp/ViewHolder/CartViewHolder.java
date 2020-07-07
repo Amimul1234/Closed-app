@@ -17,6 +17,7 @@ public class CartViewHolder extends RecyclerView.ViewHolder implements View.OnCl
     public ImageView cart_image;
     private ItemClickListener itemClickListener;
     public ElegantNumberButton numberButton;
+    public ImageView delete;
 
 
     public CartViewHolder(@NonNull View itemView) {
@@ -27,6 +28,7 @@ public class CartViewHolder extends RecyclerView.ViewHolder implements View.OnCl
         txtProductPrice = itemView.findViewById(R.id.cart_product_price);
         txtProductQuantity = itemView.findViewById(R.id.cart_product_quantity);
         numberButton = itemView.findViewById(R.id.cart_item_change_btn);
+        delete = itemView.findViewById(R.id.cart_item_delete);
     }
 
     @Override
