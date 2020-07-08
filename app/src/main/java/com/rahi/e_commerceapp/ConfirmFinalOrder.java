@@ -95,7 +95,7 @@ public class ConfirmFinalOrder extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                for(DataSnapshot ids : snapshot.getChildren())
+                for(DataSnapshot ids : snapshot.getChildren())//Number er under e amra key rakchi.....so o key iterate kore retrive korte hobe....
                 {
                     p = ids.getKey();
                 }
