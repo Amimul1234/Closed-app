@@ -13,13 +13,22 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.rahi.e_commerceapp.Prevalent.Prevalent;
 
+import java.io.ObjectOutput;
+import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 //This class is for final confirmation of the shipment...
 
@@ -27,8 +36,11 @@ public class ConfirmFinalOrder extends AppCompatActivity {
 
     private EditText nameEditText, phoneEditText, addressEditText, cityEditText;
     private Button confirmOrderButton;
-
     private String totalAmount = "";
+    int orderNUmber = 0;
+    String p = new String();
+
+    final DatabaseReference orderNumber = FirebaseDatabase.getInstance().getReference();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,11 +83,48 @@ public class ConfirmFinalOrder extends AppCompatActivity {
         }
         else
         {
-            ConfirmOrder();
+            UpdateValue();
         }
     }
 
+    private void UpdateValue() {
+
+        Query query = orderNumber.child("Orders").child(Prevalent.currentOnlineUser.getPhone()).orderByKey().limitToLast(1);//Checking for the last order
+
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                for(DataSnapshot ids : snapshot.getChildren())
+                {
+                    p = ids.getKey();
+                }
+
+                orderNUmber = Integer.parseInt(p)+1;
+
+                ConfirmOrder();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        if(orderNUmber == 0)
+        {
+            ConfirmOrder();
+        }
+
+    }
+
     private void ConfirmOrder() {
+
+
+        final DatabaseReference ordersRef = FirebaseDatabase.getInstance().getReference().child("Orders")
+                .child(Prevalent.currentOnlineUser.getPhone()).child(String.valueOf(orderNUmber));//Creating new Unique node
+
+
         final String saveCurrentDate, saveCurrentTime;
 
         Calendar callForDate = Calendar.getInstance();
@@ -86,12 +135,11 @@ public class ConfirmFinalOrder extends AppCompatActivity {
         SimpleDateFormat currentTime = new SimpleDateFormat("HH:mm::ss a");
         saveCurrentTime = currentTime.format(callForDate.getTime());
 
-        final DatabaseReference ordersRef = FirebaseDatabase.getInstance().getReference().child("Orders")
-                .child(Prevalent.currentOnlineUser.getPhone());
 
         HashMap <String, Object> orderMap = new HashMap<>();
 
-        orderMap.put("totalAmount", totalAmount);
+        orderMap.put("order_number", String.valueOf(orderNUmber));
+        orderMap.put("totalAmount", String.valueOf(totalAmount));
         orderMap.put("name", nameEditText.getText().toString());
         orderMap.put("phone", phoneEditText.getText().toString());
         orderMap.put("address", addressEditText.getText().toString());
@@ -103,8 +151,10 @@ public class ConfirmFinalOrder extends AppCompatActivity {
         ordersRef.updateChildren(orderMap).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
+
                 if(task.isSuccessful())
                 {
+
                     FirebaseDatabase.getInstance().getReference().child("Cart List")
                             .child("User View")
                             .child(Prevalent.currentOnlineUser.getPhone())
@@ -114,15 +164,15 @@ public class ConfirmFinalOrder extends AppCompatActivity {
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if(task.isSuccessful())
                                     {
-                                        Toast.makeText(ConfirmFinalOrder.this, "Final order placed sucessfully", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(ConfirmFinalOrder.this, "Final order placed successfully", Toast.LENGTH_SHORT).show();
 
                                         Intent intent = new Intent(ConfirmFinalOrder.this, HomeActivity.class);
-                                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                                         startActivity(intent);
                                         finish();
                                     }
                                 }
                             });
+
                 }
             }
         });
