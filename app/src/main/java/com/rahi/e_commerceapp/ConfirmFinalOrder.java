@@ -40,6 +40,7 @@ public class ConfirmFinalOrder extends AppCompatActivity {
     int orderNUmber = 0;
     String p = new String();
 
+
     final DatabaseReference orderNumber = FirebaseDatabase.getInstance().getReference();
 
     @Override
@@ -81,6 +82,7 @@ public class ConfirmFinalOrder extends AppCompatActivity {
         {
             Toast.makeText(this, "Please provide city name", Toast.LENGTH_SHORT).show();
         }
+
         else
         {
             UpdateValue();
@@ -100,8 +102,7 @@ public class ConfirmFinalOrder extends AppCompatActivity {
                     p = ids.getKey();
                 }
 
-                orderNUmber = Integer.parseInt(p)+1;
-
+                orderNUmber = Integer.parseInt(p) + 1;
                 ConfirmOrder();
             }
 
@@ -111,15 +112,9 @@ public class ConfirmFinalOrder extends AppCompatActivity {
             }
         });
 
-        if(orderNUmber == 0)
-        {
-            ConfirmOrder();
-        }
-
     }
 
     private void ConfirmOrder() {
-
 
         final DatabaseReference ordersRef = FirebaseDatabase.getInstance().getReference().child("Orders")
                 .child(Prevalent.currentOnlineUser.getPhone()).child(String.valueOf(orderNUmber));//Creating new Unique node
@@ -176,6 +171,6 @@ public class ConfirmFinalOrder extends AppCompatActivity {
                 }
             }
         });
-
     }
+
 }
