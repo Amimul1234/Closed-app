@@ -91,40 +91,23 @@ public class ConfirmFinalOrder extends AppCompatActivity {
 
     private void UpdateValue() {
 
-        Query query1 = orderNumber.child("Orders").child(Prevalent.currentOnlineUser.getPhone()).limitToFirst(1);//This query is for handling 0 case......Basically queering 2 times int the database for existence of the node.
+        Query query = orderNumber.child("Orders").child(Prevalent.currentOnlineUser.getPhone()).orderByKey().limitToLast(1);//Checking for the last order
 
-        query1.addListenerForSingleValueEvent(new ValueEventListener() {
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                 if(snapshot.exists())
                 {
-                    Query query = orderNumber.child("Orders").child(Prevalent.currentOnlineUser.getPhone()).orderByKey().limitToLast(1);//Checking for the last order
+                    for(DataSnapshot ids : snapshot.getChildren())//Number er under e amra key rakchi.....so o key iterate kore retrive korte hobe....
+                    {
+                        p = ids.getKey();
+                    }
 
-                    query.addListenerForSingleValueEvent(new ValueEventListener() {
-
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                            for(DataSnapshot ids : snapshot.getChildren())//Number er under e amra key rakchi.....so o key iterate kore retrive korte hobe....
-                            {
-                                p = ids.getKey();
-                            }
-
-                            orderNUmber = Integer.parseInt(p) + 1;
-                            ConfirmOrder();
-
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-                            Toast.makeText(ConfirmFinalOrder.this, "Error reading from database", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                }
-
-                else
+                    orderNUmber = Integer.parseInt(p) + 1;
+                    ConfirmOrder();
+                } else
                 {
                     ConfirmOrder();
                 }
@@ -133,7 +116,7 @@ public class ConfirmFinalOrder extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                Toast.makeText(ConfirmFinalOrder.this, "Error reading from database", Toast.LENGTH_SHORT).show();
             }
         });
 
