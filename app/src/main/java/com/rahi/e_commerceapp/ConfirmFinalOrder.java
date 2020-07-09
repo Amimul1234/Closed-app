@@ -38,7 +38,7 @@ public class ConfirmFinalOrder extends AppCompatActivity {
     private Button confirmOrderButton;
     private String totalAmount = "";
     int orderNUmber = 0;
-    String p = new String();
+    String p = "";
 
 
     final DatabaseReference orderNumber = FirebaseDatabase.getInstance().getReference();
@@ -91,19 +91,44 @@ public class ConfirmFinalOrder extends AppCompatActivity {
 
     private void UpdateValue() {
 
-        Query query = orderNumber.child("Orders").child(Prevalent.currentOnlineUser.getPhone()).orderByKey().limitToLast(1);//Checking for the last order
+        Query query1 = orderNumber.child("Orders").child(Prevalent.currentOnlineUser.getPhone()).limitToFirst(1);//This query is for handling 0 case......Basically queering 2 times int the database for existence of the node.
 
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
+        query1.addListenerForSingleValueEvent(new ValueEventListener() {
+
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                for(DataSnapshot ids : snapshot.getChildren())//Number er under e amra key rakchi.....so o key iterate kore retrive korte hobe....
+                if(snapshot.exists())
                 {
-                    p = ids.getKey();
+                    Query query = orderNumber.child("Orders").child(Prevalent.currentOnlineUser.getPhone()).orderByKey().limitToLast(1);//Checking for the last order
+
+                    query.addListenerForSingleValueEvent(new ValueEventListener() {
+
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                            for(DataSnapshot ids : snapshot.getChildren())//Number er under e amra key rakchi.....so o key iterate kore retrive korte hobe....
+                            {
+                                p = ids.getKey();
+                            }
+
+                            orderNUmber = Integer.parseInt(p) + 1;
+                            ConfirmOrder();
+
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                            Toast.makeText(ConfirmFinalOrder.this, "Error reading from database", Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 }
 
-                orderNUmber = Integer.parseInt(p) + 1;
-                ConfirmOrder();
+                else
+                {
+                    ConfirmOrder();
+                }
+
             }
 
             @Override
@@ -163,6 +188,7 @@ public class ConfirmFinalOrder extends AppCompatActivity {
 
                                         Intent intent = new Intent(ConfirmFinalOrder.this, HomeActivity.class);
                                         startActivity(intent);
+                                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                         finish();
                                     }
                                 }
