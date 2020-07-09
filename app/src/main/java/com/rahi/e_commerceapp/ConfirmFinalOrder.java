@@ -91,6 +91,8 @@ public class ConfirmFinalOrder extends AppCompatActivity {
 
     private void UpdateValue() {
 
+        //Checking for last order made by the customer
+
         Query query = orderNumber.child("Orders").child(Prevalent.currentOnlineUser.getPhone()).orderByKey().limitToLast(1);//Checking for the last order
 
         query.addListenerForSingleValueEvent(new ValueEventListener() {
