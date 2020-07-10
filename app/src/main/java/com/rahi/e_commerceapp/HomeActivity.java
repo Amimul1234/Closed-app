@@ -1,13 +1,16 @@
 package com.rahi.e_commerceapp;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +31,7 @@ import com.squareup.picasso.Picasso;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
+import androidx.cardview.widget.CardView;
 import androidx.core.view.GravityCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -50,6 +54,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private DatabaseReference ProductsRef;
     private RecyclerView recyclerView;
     RecyclerView.LayoutManager layoutManager;
+    public static int p;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +62,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_home);
 
         ProductsRef = FirebaseDatabase.getInstance().getReference().child("Products");
+
+        DisplayMetrics displayMetrics = HomeActivity.this.getResources().getDisplayMetrics();
+        p = displayMetrics.widthPixels;
 
         Paper.init(this);
 
@@ -93,7 +101,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         recyclerView = findViewById(R.id.recycler_menu);
         recyclerView.setHasFixedSize(true);
-        layoutManager = new GridLayoutManager(this,2);
+        layoutManager = new GridLayoutManager(this, 2);
         recyclerView.setLayoutManager(layoutManager);
     }
 
@@ -131,6 +139,12 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                     @Override
                     public ProductViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
                         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.products_items_layout, parent, false);
+
+                        ViewGroup.LayoutParams abcd =  view.getLayoutParams();// Handling different screen sizes
+                        abcd.height = p/2+(p/5);
+                        abcd.width = p/2-20;
+                        view.setLayoutParams(abcd);
+
                         ProductViewHolder holder = new ProductViewHolder(view);
                         return holder;
                     }

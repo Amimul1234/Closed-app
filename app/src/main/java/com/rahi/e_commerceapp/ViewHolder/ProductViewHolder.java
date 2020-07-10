@@ -1,5 +1,7 @@
 package com.rahi.e_commerceapp.ViewHolder;
 
+import android.content.Context;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -34,4 +36,5 @@ public class ProductViewHolder extends RecyclerView.ViewHolder implements View.O
     public void onClick(View v) {
         listener.onClick(v, getAdapterPosition(), false);
     }
+
 }
