@@ -17,6 +17,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.rahi.e_commerceapp.Model.Users;
 import com.rahi.e_commerceapp.Prevalent.Prevalent;
@@ -108,43 +109,32 @@ public class LoginActivity extends AppCompatActivity {
         final DatabaseReference RootRef;
         RootRef = FirebaseDatabase.getInstance().getReference();
 
-        RootRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        final Query query = RootRef.child("Users").orderByChild("phone").equalTo(phone);//Checking for user
+
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                if(dataSnapshot.child(parentDb).child(phone).exists())
+                if(dataSnapshot.exists())
                 {
-                    Users users = dataSnapshot.child(parentDb).child(phone).getValue(Users.class);
+                    Users users = dataSnapshot.child(phone).getValue(Users.class);
 
                     if(users.getPhone().equals(phone))//If admin disables the phone number......
                     {
                         if(users.getPassword().equals(password))
                         {
 
-                            if(parentDb.equals("Admins"))
+                            if(rememberMe.isChecked())//Writing user data on android storage
                             {
-                                Toast.makeText(getApplicationContext(), "Log in successful", Toast.LENGTH_SHORT).show();
-
-                                Intent intent = new Intent(getApplicationContext(), AdminCategoryActivity.class);
-                                startActivity(intent);
+                                Paper.book().write(Prevalent.UserPhoneKey, phone);
+                                Paper.book().write(Prevalent.UserPasswordKey, password);
                             }
 
-                            else
-                            {
+                            Toast.makeText(getApplicationContext(), "Log in successful", Toast.LENGTH_SHORT).show();
 
-                                if(rememberMe.isChecked())//Writing user data on android storage
-                                {
-                                    Paper.book().write(Prevalent.UserPhoneKey, phone);
-                                    Paper.book().write(Prevalent.UserPasswordKey, password);
-                                }
-
-                                Toast.makeText(getApplicationContext(), "Log in successful", Toast.LENGTH_SHORT).show();
-
-                                Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-                                Prevalent.currentOnlineUser = users;
-                                startActivity(intent);
-                            }
-
+                            Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                            Prevalent.currentOnlineUser = users;
+                            startActivity(intent);
                         }
 
                         else

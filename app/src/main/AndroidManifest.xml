@@ -48,12 +48,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".AdminCategoryActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".AdminProductActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".RegisterActivity"
             android:screenOrientation="portrait" />
         <activity
