@@ -86,11 +86,20 @@ public class LoginActivity extends AppCompatActivity {
 
         if(phone.isEmpty())
         {
-            Toast.makeText(getApplicationContext(), "Please enter a phone number", Toast.LENGTH_SHORT).show();
+            InputNumber.setError("Please enter your mobile number");
+            InputNumber.requestFocus();
         }
+
+        else if(phone.length() != 11)
+        {
+            InputNumber.setError("Please enter a valid mobile number");
+            InputNumber.requestFocus();
+        }
+
         else if(password.isEmpty())
         {
-            Toast.makeText(getApplicationContext(), "Please write your password", Toast.LENGTH_SHORT).show();
+            InputPassword.setError("Please enter your password");
+            InputPassword.requestFocus();
         }
 
         else
