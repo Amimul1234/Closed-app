@@ -219,6 +219,7 @@ public class Settings extends AppCompatActivity {
     }
 
     private void userInfoDisplay(final CircleImageView profileImageView, final EditText fullNameEditText, final EditText userPhoneEditText, final EditText adressEditText) {
+
         DatabaseReference UserRef = FirebaseDatabase.getInstance().getReference().child("Users").child(Prevalent.currentOnlineUser.getPhone());
 
         UserRef.addValueEventListener(new ValueEventListener() {
