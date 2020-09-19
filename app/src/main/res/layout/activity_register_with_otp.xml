@@ -1,74 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/relativeLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".RegisterWithOtp">
 
-    <RelativeLayout
-        android:id="@+id/relativeLayout"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:background="@color/colorPrimary">
-
-        <ImageView
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:background="@drawable/ic_logo" />
-
-    </RelativeLayout>
-
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/logo"
         android:layout_width="match_parent"
-        android:layout_height="120dp"
-        android:layout_below="@id/relativeLayout"
-        android:layout_marginTop="-50dp"
-        android:background="@drawable/waves" />
+        android:layout_height="230dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:padding="5dp"
+        android:src="@drawable/logo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/imageView"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp"
-        android:text="May I ask you phone number?"
-        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-        android:textColor="@color/colorPrimary" />
-
-    <LinearLayout
-        android:id="@+id/linearLayout"
+        android:id="@+id/txt1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/textView"
-        android:orientation="horizontal"
-        android:padding="15dp">
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/ethnocentric"
+        android:gravity="center"
+        android:text="Dear  Customer"
+        android:textColor="#0026FF"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/logo" />
 
-        <EditText
-            android:id="@+id/editTextPhone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:digits="0123456789"
-            android:inputType="numberDecimal"
-            android:hint="Enter Your Mobile Number"
-            android:maxLength="11"/>
+    <TextView
+        android:id="@+id/txt2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/ethnocentric"
+        android:gravity="center"
+        android:text="Register a new account"
+        android:textColor="#0026FF"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt1" />
 
-    </LinearLayout>
+    <EditText
+        android:id="@+id/customer_register_mobile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="18dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginRight="18dp"
+        android:layout_marginBottom="60dp"
+        android:background="@drawable/edittext_design"
+        android:drawableLeft="@drawable/phone"
+        android:drawablePadding="10dp"
+        android:hint="Mobile Number"
+        android:inputType="number"
+        android:padding="20dp"
+        android:textColorHint="#666"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt2" />
+
+    <ProgressBar
+        android:id="@+id/progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/customer_register_mobile" />
 
     <Button
-        android:id="@+id/buttonContinue"
-        android:layout_width="150dp"
+        android:id="@+id/send_otp_btn"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/linearLayout"
-        android:layout_centerHorizontal="true"
-        android:background="@color/colorPrimary"
-        android:text="Continue"
+        android:layout_marginStart="25dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginRight="25dp"
+        android:layout_marginBottom="35dp"
+        android:background="@drawable/buttons"
+        android:elevation="0dp"
+        android:fontFamily="@font/ethnocentric"
+        android:padding="15dp"
+        android:text="Send OTP"
         android:textAllCaps="false"
-        android:textColor="#ffffff" />
+        android:textColor="#fff"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
-</RelativeLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

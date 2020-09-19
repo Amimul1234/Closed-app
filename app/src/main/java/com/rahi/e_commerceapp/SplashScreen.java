@@ -1,23 +1,16 @@
 package com.rahi.e_commerceapp;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.WindowManager;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.TextView;
+import android.os.Handler;
+import android.widget.ImageView;
 
 
 public class SplashScreen extends AppCompatActivity {
 
-    private static int SPLASH_TIME_OUT = 6500;
-
-    private Animation topAnimation, middleAnimation, bottomAnimation;
-    private TextView company_name, slogan;
-
+    private ImageView splash_logo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,23 +19,18 @@ public class SplashScreen extends AppCompatActivity {
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        company_name = findViewById(R.id.company_name1);
-        slogan = findViewById(R.id.slogan1);
+        splash_logo = findViewById(R.id.splash_logo);
 
-        bottomAnimation = AnimationUtils.loadAnimation(this, R.anim.bottom_animation);
-        middleAnimation = AnimationUtils.loadAnimation(this, R.anim.middle_animation);
-
-        company_name.setAnimation(middleAnimation);
-        slogan.setAnimation(bottomAnimation);
-
-        new Handler().postDelayed(new Runnable() {
+        new Handler().postDelayed(new Runnable(){
             @Override
             public void run() {
-                Intent intent = new Intent(SplashScreen.this, MainActivity.class);
-                startActivity(intent);
+                Intent mainIntent = new Intent(SplashScreen.this, MainActivity.class);
+                mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(mainIntent);
                 finish();
-            }
-        }, SPLASH_TIME_OUT);
 
+            }
+        }, 3000);
     }
+
 }

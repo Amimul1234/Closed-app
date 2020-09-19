@@ -6,10 +6,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,8 +32,9 @@ public class LoginActivity extends AppCompatActivity {
     private Button LoginButton;
     private ProgressDialog loadingbar;
     private CheckBox rememberMe;
-    private TextView AdminLink, NotAdminLink;
-    private String parentDb = "Users";
+    private ImageView visibility;
+    private Boolean isShowPin = false;
+    private TextView ForgetPin, SignUp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,14 +42,29 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         LoginButton = findViewById(R.id.login_btn);
-        InputNumber = findViewById(R.id.login_phone_number_input);
-        InputPassword = findViewById(R.id.login_password_input);
+        InputNumber = findViewById(R.id.customer_mobile);
+        InputPassword = findViewById(R.id.customer_pin);
+        SignUp=(TextView)findViewById(R.id.sign_up);
+        ForgetPin=(TextView)findViewById(R.id.forget_pin);
+        rememberMe = findViewById(R.id.remember_me);
+        visibility = findViewById(R.id.show_pin);
         loadingbar = new ProgressDialog(this);
-        AdminLink = findViewById(R.id.admin_panel_link);
-        NotAdminLink = findViewById(R.id.not_admin_panel_link);
-
-        rememberMe = findViewById(R.id.remember_me_chkb);
         Paper.init(this);
+
+        ForgetPin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //it will added later
+            }
+        });
+
+        SignUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(LoginActivity.this,RegisterWithOtp.class);
+                startActivity(intent);
+            }
+        });
 
         LoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,25 +73,20 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        AdminLink.setOnClickListener(new View.OnClickListener() {
+        visibility.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LoginButton.setText("Login Admin");
-                AdminLink.setVisibility(View.INVISIBLE);
-                NotAdminLink.setVisibility(View.VISIBLE);
-                parentDb = "Admins";
-                rememberMe.setVisibility(View.INVISIBLE);
-            }
-        });
 
-        NotAdminLink.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                LoginButton.setText("Login");
-                AdminLink.setVisibility(View.VISIBLE);
-                NotAdminLink.setVisibility(View.INVISIBLE);
-                parentDb = "Users";
-                rememberMe.setVisibility(View.VISIBLE);
+                if (isShowPin) {
+                    InputPassword.setTransformationMethod(new PasswordTransformationMethod());
+                    visibility.setImageResource(R.drawable.ic_visibility_off);
+                    isShowPin = false;
+
+                }else{
+                    InputPassword.setTransformationMethod(null);
+                    visibility.setImageResource(R.drawable.ic_visibility);
+                    isShowPin = true;
+                }
             }
         });
 
@@ -98,13 +111,13 @@ public class LoginActivity extends AppCompatActivity {
 
         else if(password.isEmpty())
         {
-            InputPassword.setError("Please enter your password");
+            InputPassword.setError("Please enter your pin");
             InputPassword.requestFocus();
         }
 
         else
         {
-            loadingbar.setTitle("Create Account");
+            loadingbar.setTitle("Login Account");
             loadingbar.setMessage("Please wait while we are checking the credentials....");
             loadingbar.setCanceledOnTouchOutside(false);
             loadingbar.show();
@@ -148,7 +161,7 @@ public class LoginActivity extends AppCompatActivity {
 
                         else
                         {
-                            Toast.makeText(LoginActivity.this, "Please enter correct password", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, "Please enter correct pin number", Toast.LENGTH_SHORT).show();
                             loadingbar.dismiss();
                         }
                     }

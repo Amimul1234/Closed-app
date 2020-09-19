@@ -21,6 +21,8 @@ import com.rahi.e_commerceapp.Prevalent.Prevalent;
 
 import io.paperdb.Paper;
 
+//It will be OWO_Customer_app
+
 public class MainActivity extends AppCompatActivity {
 
     private Button joinNowButton, loginButton;

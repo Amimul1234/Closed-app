@@ -28,6 +28,12 @@
             android:iconTint="#FFFFFF"/>
 
         <item
+            android:id="@+id/nav_delivery"
+            android:icon="@drawable/delivery"
+            android:title="Delivery"
+            android:iconTint="@android:color/white"/>
+
+        <item
             android:id="@+id/nav_logout"
             android:icon="@drawable/logout"
             android:title="Logout"

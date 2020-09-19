@@ -7,9 +7,12 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.renderscript.ScriptGroup;
+import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -26,19 +29,69 @@ import java.util.HashMap;
 public class RegisterActivity extends AppCompatActivity {
 
     private Button CreateAccountButton;
-    private EditText InputName, InputPhoneNumber, InputPassword;
+    private EditText InputName, InputPhoneNumber, InputPassword, InputConfirmPassword;
+    private TextView termsConditions;
     private ProgressDialog loadingbar;
+    private ImageView newCustomerPic,showPin, showConfirmPin;
+    private Boolean isShowPin = false, isShowConfirmPin = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        CreateAccountButton = findViewById(R.id.register_btn);
-        InputName = findViewById(R.id.register_username_input);
-        InputPhoneNumber = findViewById(R.id.register_phone_number_input);
-        InputPassword = findViewById(R.id.register_password_input);
+        CreateAccountButton = findViewById(R.id.create_account_btn);
+        InputName = findViewById(R.id.new_customer_name);
+        //InputPhoneNumber = findViewById(R.id.register_phone_number_input);
+        InputPassword = findViewById(R.id.new_customer_pin);
+        InputConfirmPassword = findViewById(R.id.new_customer_confirm_pin);
+        termsConditions=(TextView)findViewById(R.id.terms_conditions);
+        showPin=(ImageView)findViewById(R.id.show_pin);
+        showConfirmPin=(ImageView)findViewById(R.id.show_confirmed_pin);
+        newCustomerPic=(ImageView)findViewById(R.id.new_customer_pic);
         loadingbar = new ProgressDialog(this);
+
+        termsConditions.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(RegisterActivity.this,TermsConditionsActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        showPin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (isShowPin) {
+                    InputPassword.setTransformationMethod(new PasswordTransformationMethod());
+                    showPin.setImageResource(R.drawable.ic_visibility_off);
+                    isShowPin = false;
+
+                }else{
+                    InputPassword.setTransformationMethod(null);
+                    showPin.setImageResource(R.drawable.ic_visibility);
+                    isShowPin = true;
+                }
+            }
+        });
+
+        showConfirmPin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (isShowConfirmPin) {
+                    InputConfirmPassword.setTransformationMethod(new PasswordTransformationMethod());
+                    showConfirmPin.setImageResource(R.drawable.ic_visibility_off);
+                    isShowConfirmPin = false;
+
+                }else{
+                    InputConfirmPassword.setTransformationMethod(null);
+                    showConfirmPin.setImageResource(R.drawable.ic_visibility);
+                    isShowConfirmPin = true;
+                }
+            }
+        });
 
         CreateAccountButton.setOnClickListener(new View.OnClickListener() {
             @Override

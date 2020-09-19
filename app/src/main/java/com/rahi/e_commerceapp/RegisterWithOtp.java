@@ -30,9 +30,9 @@ public class RegisterWithOtp extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_with_otp);
 
-        editText = findViewById(R.id.editTextPhone);
+        editText = findViewById(R.id.customer_register_mobile);
 
-        findViewById(R.id.buttonContinue).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.send_otp_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 

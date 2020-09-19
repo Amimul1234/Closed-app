@@ -232,6 +232,11 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             Intent intent = new Intent(getApplicationContext(), Settings.class);
             startActivity(intent);
         }
+        else if(id==R.id.nav_delivery)
+        {
+            Intent intent=new Intent(HomeActivity.this,CustomerToCustomerDeliveryActivity.class);
+            startActivity(intent);
+        }
         else if(id == R.id.nav_logout)
         {
             Paper.book().destroy();

@@ -4,48 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FF0065"
+    android:background="@color/white"
     tools:context=".SplashScreen">
 
-    <pl.droidsonroids.gif.GifImageView
+    <ImageView
+        android:id="@+id/splash_logo"
         android:layout_width="match_parent"
-        android:layout_height="350dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/abcd"
-        android:id="@+id/gif1"
+        android:layout_height="600dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        />
-
-    <TextView
-        android:id="@+id/company_name1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/gif1"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:text="ABC"
-        android:textStyle="bold"
-        android:textSize="200sp"
-        android:gravity="center"
-        android:fontFamily="@font/bangers"
-        android:textColor="#EDD6D6"
-        />
-
-    <TextView
-        android:id="@+id/slogan1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="ALWAYS AT\n                              YOUR SERVICE"
-        app:layout_constraintTop_toBottomOf="@+id/company_name1"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:textStyle="bold|italic"
-        android:textAlignment="center"
-        android:textSize="25sp"
-        android:textColor="#FFFFFF"
-        android:textAllCaps="true"
+        android:src="@drawable/logo"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
